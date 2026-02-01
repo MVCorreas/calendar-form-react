@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Form from "./components/Form";
-import EventsContainer from "./components/EventsContainer"
+import EventsContainer from "./components/EventsContainer";
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -15,6 +15,7 @@ export default function Home() {
     date: "",
     description: "",
   });
+  const [submittedData, setSubmittedData] = useState([]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -57,7 +58,23 @@ export default function Home() {
     e.preventDefault();
 
     if (validateForm()) {
-      return console.log("Form submitted");
+    const newEvent = {
+      id: Date.now(),
+      title: formData.title,
+      date: formData.date,
+      description: formData.description
+    }
+      setSubmittedData(prev => [...prev, newEvent]); //only adds data on submission
+      setFormData({
+        title: "",
+        date: "",
+        description: "",
+      });
+       setErrors({
+        title: "",
+        date: "",
+        description: "",
+      });
     }
   };
   return (
@@ -73,7 +90,7 @@ export default function Home() {
         />
       </div>
       <div className="w-1/3 mr-20">
-        <EventsContainer />
+        <EventsContainer events={submittedData} />
       </div>
     </main>
   );
