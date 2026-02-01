@@ -1,4 +1,4 @@
-export default function Form() {
+export default function Form({ updateFields, title, date, description }) {
   return (
     <div className="bg-white rounded-lg shadow-lg p-8">
       <h2 className="mb-6 text-3xl font-bold text-gray-800">Calendar</h2>
@@ -11,6 +11,8 @@ export default function Form() {
             type="text"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
             placeholder="Event name"
+            value={title}
+            onChange={(e) => updateFields("title", e.target.value)}
           />
         </fieldset>
         <div>
@@ -20,6 +22,8 @@ export default function Form() {
           <input
             type="date"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
+            value={date}
+            onChange={(e) => updateFields("date", e.target.value)}
           />
         </div>
         <fieldset className="border-none">
@@ -29,6 +33,8 @@ export default function Form() {
           <textarea
             className="w-full px-4 py-2 border border-gray-300 rounded-md h-24 resize-none focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent"
             placeholder="Add a description..."
+            value={description}
+            onChange={(e) => updateFields("description", e.target.value)}
           ></textarea>
         </fieldset>
         <button
