@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Form from "./components/Form";
+import EventsContainer from "./components/EventsContainer"
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -70,6 +71,9 @@ export default function Home() {
           handleSubmit={handleSubmit}
           errors={errors}
         />
+      </div>
+      <div className="w-1/3 mr-20">
+        <EventsContainer />
       </div>
     </main>
   );
