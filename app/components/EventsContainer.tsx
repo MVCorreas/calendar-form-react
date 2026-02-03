@@ -1,8 +1,9 @@
 import EventCard from "./EventCard";
+import { Event } from "../types";
 
-export default function EventsContainer({ events }) {
+export default function EventsContainer({ events }: { events: Event[] }) { //Event is one object, but in props we are receiving an array of events, not one single event
   const sortedEvents = [...events].sort((a, b) => {
-    return new Date(a.date) - new Date(b.date);
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
   });
 
   return (
