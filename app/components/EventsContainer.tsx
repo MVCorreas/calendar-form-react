@@ -18,6 +18,7 @@ export default function EventsContainer({ events }: { events: Event[] }) { //Eve
           sortedEvents.map((event) => (
             <EventCard
               key={event.id}
+              id={event.id}
               title={event.title}
               date={event.date}
               description={event.description}
