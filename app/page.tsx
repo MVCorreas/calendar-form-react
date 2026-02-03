@@ -3,18 +3,7 @@
 import { useState } from "react";
 import Form from "./components/Form";
 import EventsContainer from "./components/EventsContainer";
-
-interface FieldErrors {
-  title: string,
-  date: string,
-  description: string
-}
-
-type FormData = FieldErrors; //reuse interface since they are similar
-
-interface Event extends FormData {
-  id: number;
-}
+import { FormFields, FieldErrors, Event } from "./types";
 
 const VALIDATION = {
   TITLE_MAX: 50,
@@ -22,7 +11,7 @@ const VALIDATION = {
 };
 
 export default function Home() {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormFields>({
     title: "",
     date: "",
     description: "",
@@ -60,7 +49,7 @@ export default function Home() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const updateFields = (field: keyof FormData, value: string) => { //keyof --> Typescript ensures we only pass valid field names
+  const updateFields = (field: keyof FormFields, value: string) => { //keyof --> Typescript ensures we only pass valid field names
     setFormData((prev) => ({
       ...prev,
       [field]: value,
