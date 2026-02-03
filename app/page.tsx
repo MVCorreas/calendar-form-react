@@ -4,26 +4,43 @@ import { useState } from "react";
 import Form from "./components/Form";
 import EventsContainer from "./components/EventsContainer";
 
+interface FieldErrors {
+  title: string,
+  date: string,
+  description: string
+}
+
+type FormData = FieldErrors; //reuse interface since they are similar
+
+interface Event extends FormData {
+  id: number;
+}
+
+const VALIDATION = {
+  TITLE_MAX: 50,
+  DESCRIPTION_MAX: 200,
+};
+
 export default function Home() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     title: "",
     date: "",
     description: "",
   });
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<FieldErrors>({
     title: "",
     date: "",
     description: "",
   });
-  const [submittedData, setSubmittedData] = useState([]);
+  const [submittedData, setSubmittedData] = useState<Event[]>([]);
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: Partial<FieldErrors> = {};
     const today = new Date();
 
     if (!formData.title.trim()) {
       newErrors.title = "Please, enter a title";
-    } else if (formData.title.length > 50) {
+    } else if (formData.title.length > VALIDATION.TITLE_MAX) {
       newErrors.title = "Title must not exceed 50 characters";
     }
 
@@ -35,15 +52,15 @@ export default function Home() {
 
     if (!formData.description.trim()) {
       newErrors.description = "Please, enter a description";
-    } else if (formData.description.length > 200) {
+    } else if (formData.description.length > VALIDATION.DESCRIPTION_MAX) {
       newErrors.description = "The description must not exceed 50 characters";
     }
 
-    setErrors(newErrors);
+    setErrors(newErrors as FieldErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const updateFields = (field, value) => {
+  const updateFields = (field: keyof FormData, value: string) => { //keyof --> Typescript ensures we only pass valid field names
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -54,7 +71,7 @@ export default function Home() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (validateForm()) {
